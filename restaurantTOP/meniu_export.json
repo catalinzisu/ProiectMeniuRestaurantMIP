@@ -1,0 +1,55 @@
+[ {
+  "nume" : "Supa Crema de Ciuperci",
+  "pret" : 25.0,
+  "categorie" : "Aperitive",
+  "gramaj" : 300,
+  "vegetarian" : true
+}, {
+  "nume" : "Platou Branzeturi",
+  "pret" : 55.0,
+  "categorie" : "Aperitive",
+  "gramaj" : 400,
+  "vegetarian" : true
+}, {
+  "nume" : "Pizza Carbonara",
+  "pret" : 34.0,
+  "categorie" : "FelPrincipal",
+  "gramaj" : 500,
+  "vegetarian" : false
+}, {
+  "nume" : "Pizza Vegetariana",
+  "pret" : 37.0,
+  "categorie" : "FelPrincipal",
+  "gramaj" : 500,
+  "vegetarian" : true
+}, {
+  "nume" : "Somon la Gratar",
+  "pret" : 75.0,
+  "categorie" : "FelPrincipal",
+  "gramaj" : 250,
+  "vegetarian" : false
+}, {
+  "nume" : "T-Bone Steak",
+  "pret" : 130.0,
+  "categorie" : "FelPrincipal",
+  "gramaj" : 500,
+  "vegetarian" : false
+}, {
+  "nume" : "Papanasi",
+  "pret" : 30.0,
+  "categorie" : "Desert",
+  "gramaj" : 200,
+  "vegetarian" : true
+}, {
+  "nume" : "Fresh de Portocale",
+  "pret" : 18.0,
+  "categorie" : "BauturaRacoritoare",
+  "volum" : 350,
+  "alcoholic" : false
+}, {
+  "nume" : "Pahar Vin Alb",
+  "pret" : 22.0,
+  "categorie" : "BauturaAlcoolica",
+  "volum" : 150,
+  "alcoholic" : true
+} ]
