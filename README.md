@@ -14,60 +14,60 @@ Este interfața pe care o văd clienții la masă.
 
 Pot răsfoi meniul digital.
 
-Filtrare inteligentă: Dacă ești vegetarian sau ai un buget fix, aplicația îți arată doar ce poți mânca.
+Filtrare inteligentă: Utilizatorii pot filtra produsele în funcție de preferințe (vegetarian, tip produs) sau buget.
 
-Văd poze și detalii (gramaj, ingrediente), dar nu pot trimite comanda direct la bucătărie (pentru a evita glumele proaste).
+Vizualizare detalii: Se pot consulta ingredientele, gramajul și prețul, însă plasarea comenzii este restricționată pentru acest rol.
 
 2. Modul Ospătar (Staff)
 
-Interfața de lucru pentru angajați (necesită login).
+Interfața de lucru pentru angajați (necesită autentificare).
 
-Preluare comenzi rapidă.
+Preluare rapidă a comenzilor.
 
-Calculator automat de oferte: Nu trebuie să calculeze nimeni reducerile manual. Sistemul aplică singur:
+Calculator automat de oferte: Sistemul aplică automat reguli de reducere complexe:
 
 Happy Hour (reduceri la băuturi).
 
-Party Pack (iei 4 pizza, plătești 3).
+Party Pack (la 4 pizza comandate, una este gratuită).
 
-Meal Deal (reduceri la desert).
+Meal Deal (reduceri la desert la comandarea unui fel principal).
 
-Văd totalul de plată în timp real.
+Vizualizare total de plată în timp real.
 
 3. Modul Manager (Admin)
 
-Panoul de control pentru proprietar.
+Panoul de control pentru administrator.
 
-Poate angaja sau concedia ospătari.
+Gestiune personal (angajare/concediere).
 
-Poate modifica meniul (adăugare/ștergere produse) direct din aplicație.
+Modificare meniu (CRUD - adăugare, editare, ștergere produse).
 
-Are butoane simple pentru a activa/dezactiva ofertele zilei.
+Activare/dezactivare rapidă a ofertelor globale.
 
-Backup: Poate exporta/importa meniul în format JSON ca să nu piardă datele.
+Backup: Funcționalitate de export/import a meniului în format JSON pentru siguranța datelor.
 
-Ce tehnologii am folosit
+Tehnologii Utilizate
 
-Am vrut să folosesc un stack modern de Java:
+Proiectul utilizează un stack modern de tehnologii Java:
 
-Java 21: Am folosit feature-uri noi precum record, switch expressions și sealed classes.
+Limbaj: Java 21 (utilizând facilități moderne precum record, switch expressions, sealed classes).
 
-JavaFX: Pentru interfața grafică (folosind o arhitectură modulară, nu tot codul într-un singur fișier).
+Interfață Grafică: JavaFX (arhitectură modulară).
 
-Hibernate (JPA) & PostgreSQL: Pentru a salva datele permanent într-o bază de date SQL.
+Persistență: Hibernate (JPA) & PostgreSQL.
 
-Maven: Pentru gestionarea dependențelor.
+Dependency Management: Maven.
 
-Jackson: Pentru lucrul cu fișiere JSON.
+Procesare Date: Jackson (pentru manipularea fișierelor JSON).
 
-Design Patterns (Structura codului)
+Arhitectură și Design Patterns
 
-Ca să nu iasă un cod "spaghetti", am implementat câteva modele de proiectare:
+Codul este structurat pentru a fi modular și ușor de întreținut, implementând următoarele modele de proiectare:
 
-Builder Pattern: Folosit la Pizza, pentru că are multe ingrediente opționale.
+Builder Pattern: Utilizat pentru construirea obiectelor complexe (ex. clasa Pizza cu ingrediente opționale).
 
-Strategy Pattern: Pentru reduceri. Pot adăuga o regulă nouă de reducere fără să stric restul codului.
+Strategy Pattern: Implementat pentru calculul dinamic al reducerilor, permițând adăugarea de noi reguli fără modificarea codului existent.
 
-Singleton: Pentru conexiunea la baza de date (să nu deschid 100 de conexiuni degeaba).
+Singleton Pattern: Folosit pentru gestionarea eficientă a conexiunii la baza de date.
 
-Repository Pattern: Separă logica de salvare de interfața grafică.
+Repository Pattern: Separă logica de acces la date de interfața grafică.
