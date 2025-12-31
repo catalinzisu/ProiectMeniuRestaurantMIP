@@ -2,6 +2,7 @@ package org.example.interfatarestaurant.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,34 +13,43 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
     private double totalAmount;
+    private LocalDateTime orderDate;
+    private String tableName; // Adaugam numele mesei pentru istoric
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> items = new ArrayList<>();
 
-    public Order() {
-        this.date = LocalDateTime.now();
-    }
+    public Order() {}
 
-    public Order(User user) {
-        this.date = LocalDateTime.now();
+    public Order(User user, String tableName) {
         this.user = user;
+        this.tableName = tableName;
+        this.orderDate = LocalDateTime.now();
     }
 
-    public void addItem(OrderItem item) {
-        items.add(item);
-        item.setOrder(this);
-    }
-
+    public void addItem(OrderItem item) { items.add(item); }
     public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
-    public double getTotalAmount() { return totalAmount; }
-    public List<OrderItem> getItems() { return items; }
-    public User getUser() { return user; }
-    public LocalDateTime getDate() { return date; }
+
     public Long getId() { return id; }
+    public double getTotalAmount() { return totalAmount; }
+    public LocalDateTime getOrderDate() { return orderDate; }
+    public String getTableName() { return tableName; }
+    public User getUser() { return user; }
+    public List<OrderItem> getItems() { return items; }
+
+    // TOSTRING PENTRU AFISARE FRUMOASA IN LISTA (In caz ca nu folosim tabel)
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return String.format("Masa: %s | Data: %s | Total: %.2f RON | Ospatar: %s",
+                tableName != null ? tableName : "N/A",
+                orderDate.format(formatter),
+                totalAmount,
+                user.getUsername());
+    }
 }

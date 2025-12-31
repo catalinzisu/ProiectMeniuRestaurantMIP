@@ -2,13 +2,12 @@ package org.example.interfatarestaurant;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.example.interfatarestaurant.UI.LoginView;
+import org.example.interfatarestaurant.controller.RestaurantController;
 
 public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
-        // Pornim direct cu Login-ul
-        new LoginView().show(stage);
+        new RestaurantController(stage);
     }
 
     public static void main(String[] args) {

@@ -1,0 +1,155 @@
+[
+  {
+    "type": "mancare",
+    "nume": "Supa Crema de Ciuperci",
+    "pret": 25.0,
+    "categorie": "Aperitive",
+    "gramaj": 300,
+    "vegetarian": true,
+    "descriere": "Supa fina din ciuperci de padure cu crutoane aromate si ulei de trufe."
+  },
+  {
+    "type": "mancare",
+    "nume": "Platou Branzeturi",
+    "pret": 55.0,
+    "categorie": "Aperitive",
+    "gramaj": 400,
+    "vegetarian": true,
+    "descriere": "Selectie de branzeturi frantuzesti si romanesti, servite cu nuci si struguri."
+  },
+  {
+    "type": "mancare",
+    "nume": "Bruschete cu Rosii",
+    "pret": 22.0,
+    "categorie": "Aperitive",
+    "gramaj": 250,
+    "vegetarian": true,
+    "descriere": "Paine prajita frecata cu usturoi, rosii proaspete, busuioc si ulei de masline."
+  },
+  {
+    "type": "mancare",
+    "nume": "Pizza Carbonara",
+    "pret": 34.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 500,
+    "vegetarian": false,
+    "descriere": "Pizza clasica cu sos alb, bacon crocant, parmezan si ou."
+  },
+  {
+    "type": "mancare",
+    "nume": "Pizza Vegetariana",
+    "pret": 37.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 500,
+    "vegetarian": true,
+    "descriere": "Pizza cu sos de rosii, mozzarella, ciuperci, ardei, porumb si masline."
+  },
+  {
+    "type": "mancare",
+    "nume": "Paste Bolognese",
+    "pret": 42.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 400,
+    "vegetarian": false,
+    "descriere": "Spaghete cu sos ragu din carne de vita, rosii si ierburi aromatice."
+  },
+  {
+    "type": "mancare",
+    "nume": "Burger Black Angus",
+    "pret": 48.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 450,
+    "vegetarian": false,
+    "descriere": "Burger din vita Black Angus cu branza cheddar, bacon, ceapa caramelizata si cartofi prajiti."
+  },
+  {
+    "type": "mancare",
+    "nume": "Somon la Gratar",
+    "pret": 75.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 250,
+    "vegetarian": false,
+    "descriere": "File de somon proaspat la gratar servit cu sparanghel si sos de lamaie."
+  },
+  {
+    "type": "mancare",
+    "nume": "T-Bone Steak",
+    "pret": 130.0,
+    "categorie": "FelPrincipal",
+    "gramaj": 500,
+    "vegetarian": false,
+    "descriere": "Friptura de vita maturata, gatita mediu, servita cu unt aromat."
+  },
+  {
+    "type": "mancare",
+    "nume": "Papanasi",
+    "pret": 30.0,
+    "categorie": "Desert",
+    "gramaj": 200,
+    "vegetarian": true,
+    "descriere": "Papanasi traditionali cu smantana si dulceata de afine."
+  },
+  {
+    "type": "mancare",
+    "nume": "Lava Cake",
+    "pret": 28.0,
+    "categorie": "Desert",
+    "gramaj": 150,
+    "vegetarian": true,
+    "descriere": "Prajitura de ciocolata cu interior lichid, servita cu inghetata de vanilie."
+  },
+  {
+    "type": "bautura",
+    "nume": "Fresh de Portocale",
+    "pret": 18.0,
+    "categorie": "BauturaRacoritoare",
+    "volum": 350.0,
+    "alcoholic": false,
+    "descriere": "Suc natural stors pe loc din portocale proaspete."
+  },
+  {
+    "type": "bautura",
+    "nume": "Apa Plata",
+    "pret": 10.0,
+    "categorie": "BauturaRacoritoare",
+    "volum": 500.0,
+    "alcoholic": false,
+    "descriere": "Apa minerala plata, imbuteliata."
+  },
+  {
+    "type": "bautura",
+    "nume": "Limonada cu Menta",
+    "pret": 21.0,
+    "categorie": "BauturaRacoritoare",
+    "volum": 400.0,
+    "alcoholic": false,
+    "descriere": "Limonada racoritoare cu lamaie proaspata, miere si frunze de menta."
+  },
+  {
+    "type": "bautura",
+    "nume": "Pahar Vin Alb",
+    "pret": 22.0,
+    "categorie": "BauturaAlcoolica",
+    "volum": 150.0,
+    "alcoholic": true,
+    "descriere": "Vin alb sec, editie limitata, podgorie locala."
+  },
+  {
+    "type": "bautura",
+    "nume": "Bere Artizanala",
+    "pret": 19.0,
+    "categorie": "BauturaAlcoolica",
+    "volum": 500.0,
+    "alcoholic": true,
+    "descriere": "Bere blonda nepasteurizata, produsa local."
+  },
+  {
+    "type": "bautura",
+    "nume": "Mojito",
+    "pret": 32.0,
+    "categorie": "BauturaAlcoolica",
+    "volum": 250.0,
+    "alcoholic": true,
+    "descriere": "Cocktail clasic cu rom alb, menta, lime, zahar brun si apa minerala."
+  }
+]
