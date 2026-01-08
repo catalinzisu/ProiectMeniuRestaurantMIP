@@ -7,20 +7,44 @@ import org.example.interfatarestaurant.RestaurantConfiguration;
 import org.example.interfatarestaurant.RestaurantManager;
 import org.example.interfatarestaurant.UI.*;
 import org.example.interfatarestaurant.model.*;
+import org.example.interfatarestaurant.service.RestaurantService;
 import java.util.stream.Collectors;
 
 public class RestaurantController {
     private final RestaurantModel model;
+    private final RestaurantService service;
     private final Stage stage;
     private RestaurantConfiguration config;
 
     public RestaurantController(Stage stage) {
         this.stage = stage;
         this.model = new RestaurantModel();
+        this.service = new RestaurantService();
         // Incarca configurarile la start
         this.config = RestaurantManager.incarcaConfigurare("appconfiguration.json");
-        applyConfig();
+        applyOfferStateFromDatabase();
         initLogin();
+    }
+
+    /**
+     * Încarcă starea ofertelor din baza de date (unde le-a salvat managerul)
+     * Nu mai folosi doar config file, ci fetch din BD
+     */
+    private void applyOfferStateFromDatabase() {
+        try {
+            OfferState offerState = service.getOfferState();
+            if (offerState != null) {
+                model.setHappyHour(offerState.isHappyHourActive());
+                model.setMealDeal(offerState.isMealDealActive());
+                model.setPartyPack(offerState.isPartyPackActive());
+            } else {
+                // Fall back to config if no offer state in DB
+                applyConfig();
+            }
+        } catch (Exception e) {
+            // Fall back to config if DB fetch fails
+            applyConfig();
+        }
     }
 
     private void applyConfig() {
@@ -95,17 +119,14 @@ public class RestaurantController {
             waiterView.updateTotal(0.0);
             waiterView.showOrderScreen(stage, table.getName());
 
-            // DETALII SUS-DREAPTA LA OSPATAR
             waiterView.getMenuTable().setOnMouseClicked(e -> {
                 Produs p = waiterView.getMenuTable().getSelectionModel().getSelectedItem();
                 if(p != null) {
-                    // Adaugare la dublu-click
                     if(e.getClickCount() == 2) {
                         model.addToCart(p);
                         waiterView.getBasketTable().setItems(model.getCart());
                         waiterView.updateTotal(model.calculateTotal());
                     }
-                    // Afisare detalii
                     String info = p.getNume() + " | " + p.getPret() + " RON\n";
                     info += (p.getDescriere() != null ? p.getDescriere() : "");
                     waiterView.getTxtDetails().setText(info);
@@ -143,9 +164,46 @@ public class RestaurantController {
             }
         });
         waiterView.getBtnFreeTable().setOnAction(e -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Eliberezi masa?", ButtonType.YES, ButtonType.NO);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.YES) { model.freeTable(); initWaiter(); }
+            if (model.getCurrentTable() == null) {
+                new Alert(Alert.AlertType.ERROR, "Nu ati selectat nicio masa!").show();
+                return;
+            }
+
+            String tableName = model.getCurrentTable().getName();
+            Order activeOrder = model.findActiveOrderForTable(tableName);
+
+            if (activeOrder == null || activeOrder.getItems().isEmpty()) {
+                Alert confirmFree = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Nu exista comanda pentru aceasta masa. Doriti sa o eliberati?",
+                        ButtonType.YES, ButtonType.NO);
+                confirmFree.showAndWait();
+                if (confirmFree.getResult() == ButtonType.YES) {
+                    model.freeTable();
+                    initWaiter();
+                }
+                return;
+            }
+
+            double exactTotal = model.calculateOrderTotal(activeOrder);
+            String receiptText = model.generateReceiptText(activeOrder);
+
+            Alert paymentAlert = new Alert(Alert.AlertType.INFORMATION);
+            paymentAlert.setTitle("BON DE PLATĂ");
+            paymentAlert.setHeaderText("Masa: " + tableName);
+            paymentAlert.setContentText(receiptText);
+            paymentAlert.showAndWait();
+
+            Alert confirmFree = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Plata efectuată? Eliberezi masa " + tableName + "?",
+                    ButtonType.YES, ButtonType.NO);
+            confirmFree.showAndWait();
+
+            if (confirmFree.getResult() == ButtonType.YES) {
+                model.freeTable();
+                model.clearCart();
+                new Alert(Alert.AlertType.INFORMATION, "Masa eliberata!").showAndWait();
+                initWaiter();
+            }
         });
         waiterView.showTableSelection(stage);
     }
@@ -154,74 +212,12 @@ public class RestaurantController {
         ManagerView managerView = new ManagerView();
         managerView.show(stage);
 
-        // Sincronizam checkbox-urile cu config-ul incarcat
-        managerView.getChkHappy().setSelected(config.happyHourActive);
-        managerView.getChkMeal().setSelected(config.mealDealActive);
-        managerView.getChkParty().setSelected(config.partyPackActive);
+        new ManagerController(managerView, stage);
 
-        managerView.getStaffList().getItems().setAll(model.getWaiters());
-        managerView.getMenuList().getItems().setAll(model.getAllProducts());
-
-        managerView.getBtnRefreshGlobalHistory().setOnAction(e ->
-                managerView.getAllHistoryTable().getItems().setAll(model.getAllOrders()));
-
-        managerView.getBtnAddStaff().setOnAction(e -> {
-            try {
-                model.addUser(new User(managerView.getTxtStaffUser().getText(), managerView.getTxtStaffPass().getText(), Role.WAITER));
-                managerView.getStaffList().getItems().setAll(model.getWaiters());
-            } catch (Exception ex) { new Alert(Alert.AlertType.ERROR, "Eroare user").show(); }
+        managerView.getBtnLogout().setOnAction(e -> {
+            model.logout();
+            initLogin();
         });
-        managerView.getBtnFireStaff().setOnAction(e -> {
-            User u = managerView.getStaffList().getSelectionModel().getSelectedItem();
-            if (u != null) { model.deleteUser(u); managerView.getStaffList().getItems().setAll(model.getWaiters()); }
-        });
-        managerView.getBtnAddProd().setOnAction(e -> {
-            try {
-                String n = managerView.getTxtProdName().getText();
-                double p = Double.parseDouble(managerView.getTxtProdPrice().getText());
-                String type = managerView.getTypeSelector().getValue();
-                String extraText = managerView.getTxtGramaj().getText();
-                String desc = managerView.getTxtDescriere().getText();
-                boolean isExtra = managerView.getChkExtra().isSelected();
-                Produs prod;
-                if(type.equals("Mancare")) {
-                    int gramaj = extraText.isEmpty() ? 0 : Integer.parseInt(extraText);
-                    prod = new Mancare(n, p, Categorie.FelPrincipal, gramaj, isExtra);
-                } else {
-                    double volum = extraText.isEmpty() ? 0.0 : Double.parseDouble(extraText);
-                    prod = new Bautura(n, p, Categorie.BauturaRacoritoare, volum, isExtra);
-                }
-                prod.setDescriere(desc);
-                model.addProduct(prod);
-                managerView.getMenuList().getItems().setAll(model.getAllProducts());
-                new Alert(Alert.AlertType.INFORMATION, "Adaugat!").show();
-            } catch(Exception ex) { new Alert(Alert.AlertType.ERROR, "Date invalide").show(); }
-        });
-        managerView.getBtnDeleteProd().setOnAction(e -> {
-            Produs s = managerView.getMenuList().getSelectionModel().getSelectedItem();
-            if (s != null) managerView.getMenuList().getItems().remove(s);
-        });
-        managerView.getBtnImportJson().setOnAction(e -> {
-            model.importaDate();
-            managerView.getMenuList().getItems().setAll(model.getAllProducts());
-            new Alert(Alert.AlertType.INFORMATION, "Importat!").show();
-        });
-        managerView.getBtnExportJson().setOnAction(e -> {
-            try { model.exportaDate(); new Alert(Alert.AlertType.INFORMATION, "Exportat!").show(); }
-            catch (Exception ex) { new Alert(Alert.AlertType.ERROR, "Eroare export").show(); }
-        });
-
-        // SALVARE OFERTE
-        managerView.getBtnSaveOffers().setOnAction(e -> {
-            config.happyHourActive = managerView.getChkHappy().isSelected();
-            config.mealDealActive = managerView.getChkMeal().isSelected();
-            config.partyPackActive = managerView.getChkParty().isSelected();
-            RestaurantManager.salveazaConfigurare(config, "appconfiguration.json");
-            applyConfig(); // Aplica si in modelul curent
-            new Alert(Alert.AlertType.INFORMATION, "Oferte salvate!").show();
-        });
-
-        managerView.getBtnResetTables().setOnAction(e -> { model.resetAllTables(); new Alert(Alert.AlertType.INFORMATION, "Mese Resetate!").show(); });
-        managerView.getBtnLogout().setOnAction(e -> { model.logout(); initLogin(); });
     }
 }
+

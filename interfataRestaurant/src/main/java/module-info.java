@@ -11,9 +11,10 @@ module org.example.interfatarestaurant {
 
     exports org.example.interfatarestaurant to javafx.graphics;
 
-    opens org.example.interfatarestaurant to javafx.fxml;
+    opens org.example.interfatarestaurant to javafx.fxml, com.fasterxml.jackson.databind;
     opens org.example.interfatarestaurant.UI to javafx.fxml;
     opens org.example.interfatarestaurant.model to org.hibernate.orm.core, javafx.base, com.fasterxml.jackson.databind;
-
+    opens org.example.interfatarestaurant.controller to javafx.fxml;
+    opens org.example.interfatarestaurant.service to com.fasterxml.jackson.databind;
     opens org.example.interfatarestaurant.repository to org.hibernate.orm.core;
 }

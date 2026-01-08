@@ -1,0 +1,8 @@
+{
+  "restaurantName": "Restaurant La Andrei",
+  "taxRate": 0.19,
+  "happyHourActive": false,
+  "mealDealActive": false,
+  "partyPackActive": false
+}
+

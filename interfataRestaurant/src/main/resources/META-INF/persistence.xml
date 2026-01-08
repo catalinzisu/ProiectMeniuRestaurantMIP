@@ -12,6 +12,7 @@
         <class>org.example.interfatarestaurant.model.Mancare</class>
         <class>org.example.interfatarestaurant.model.Bautura</class>
         <class>org.example.interfatarestaurant.model.User</class>
+        <class>org.example.interfatarestaurant.model.OfferState</class>
         <class>org.example.interfatarestaurant.model.OrderItem</class>
         <class>org.example.interfatarestaurant.model.RestaurantTable</class>
         <class>org.example.interfatarestaurant.model.Order</class>

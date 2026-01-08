@@ -1,7 +1,6 @@
 package org.example.interfatarestaurant.UI;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -9,37 +8,37 @@ import javafx.stage.Stage;
 import org.example.interfatarestaurant.model.*;
 
 public class ManagerView {
-    private ListView<User> staffList = new ListView<>();
-    private Button btnAddStaff = new Button("Angajează");
-    private Button btnFireStaff = new Button("Concediază");
-    private TextField txtStaffUser = new TextField();
-    private PasswordField txtStaffPass = new PasswordField();
+    private final ListView<User> staffList = new ListView<>();
+    private final Button btnAddStaff = new Button("Angajează");
+    private final Button btnFireStaff = new Button("Concediază");
+    private final TextField txtStaffUser = new TextField();
+    private final PasswordField txtStaffPass = new PasswordField();
 
-    private ListView<Produs> menuList = new ListView<>();
-    private TextField txtProdName = new TextField();
-    private TextField txtProdPrice = new TextField();
-    private ComboBox<String> typeSelector = new ComboBox<>();
+    private final ListView<Produs> menuList = new ListView<>();
+    private final TextField txtProdName = new TextField();
+    private final TextField txtProdPrice = new TextField();
+    private final ComboBox<String> typeSelector = new ComboBox<>();
 
-    private TextField txtGramaj = new TextField();
-    private TextField txtDescriere = new TextField();
-    private CheckBox chkExtra = new CheckBox("Vegetarian / Alcoolic");
+    private final TextField txtGramaj = new TextField();
+    private final TextField txtDescriere = new TextField();
+    private final CheckBox chkExtra = new CheckBox("Vegetarian / Alcoolic");
 
-    private Button btnAddProd = new Button("Adaugă Produs");
-    private Button btnDeleteProd = new Button("Șterge Produs");
-    private Button btnImportJson = new Button("Import JSON");
-    private Button btnExportJson = new Button("Export JSON");
+    private final Button btnAddProd = new Button("Adaugă Produs");
+    private final Button btnDeleteProd = new Button("Șterge Produs");
+    private final Button btnImportJson = new Button("Import JSON");
+    private final Button btnExportJson = new Button("Export JSON");
 
-    private CheckBox chkHappy = new CheckBox("Happy Hour (-50% la a 2-a bautura)");
-    private CheckBox chkMeal = new CheckBox("Meal Deal (-25% Pizza+Desert)");
-    private CheckBox chkParty = new CheckBox("Party Pack (4 Pizza -> 1 Gratis)");
-    private Button btnSaveOffers = new Button("SALVEAZA OFERTE");
+    private final CheckBox chkHappy = new CheckBox("Happy Hour (-50% la a 2-a bautura)");
+    private final CheckBox chkMeal = new CheckBox("Meal Deal (-25% Pizza+Desert)");
+    private final CheckBox chkParty = new CheckBox("Party Pack (4 Pizza -> 1 Gratis)");
+    private final Button btnSaveOffers = new Button("SALVEAZA OFERTE");
 
-    private Button btnResetTables = new Button("ELIBEREAZĂ TOATE MESELE");
+    private final Button btnResetTables = new Button("ELIBEREAZĂ TOATE MESELE");
 
-    private HistoryView allHistoryTable = new HistoryView();
-    private Button btnRefreshGlobalHistory = new Button("Reincarca Istoric");
+    private final HistoryView allHistoryTable = new HistoryView();
+    private final Button btnRefreshGlobalHistory = new Button("Reincarca Istoric");
 
-    private Button btnLogout = new Button("Logout");
+    private final Button btnLogout = new Button("Logout");
 
     public void show(Stage stage) {
         TabPane tabs = new TabPane();
