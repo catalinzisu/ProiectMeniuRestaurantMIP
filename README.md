@@ -2,7 +2,7 @@ Restaurant "La Andrei" - Sistem de Gestiune
 
 Acesta este proiectul meu de semestru pentru cursul de Medii și Instrumente de Programare. Este o aplicație desktop completă pentru administrarea unui restaurant, construită de la zero în Java.
 
-Proiectul a evoluat pe parcursul a 7 iterații, plecând de la o simplă aplicație în consolă și ajungând la o interfață grafică modernă conectată la o bază de date reală.
+Proiectul a evoluat pe parcursul a 8 iterații, plecând de la o simplă aplicație în consolă și ajungând la o interfață grafică modernă conectată la o bază de date reală.
 
 Despre Proiect
 
